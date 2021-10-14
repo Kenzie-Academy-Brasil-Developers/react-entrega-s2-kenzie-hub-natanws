@@ -1,4 +1,4 @@
-import { Container } from "./styles";
+import { Container, ImageContainer } from "./styles";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -37,7 +37,9 @@ export default function Signup() {
 
   return (
     <Container>
-      <div>imagem ilustrativa</div>
+      <ImageContainer>
+        <img src="assets/drawkit-grape-pack-illustration-1.svg" alt="imagem" />
+      </ImageContainer>
       <div>
         <form onSubmit={handleSubmit(submitForm)}>
           <input placeholder="Nome" {...register("name")} />
