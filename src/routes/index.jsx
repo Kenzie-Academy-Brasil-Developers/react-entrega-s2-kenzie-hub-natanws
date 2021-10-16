@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Route, Switch } from "react-router";
 import Home from "../pages/Home";
+import Login from "../pages/Login";
 import Signup from "../pages/Signup";
 
 export default function Routes() {
@@ -16,10 +17,13 @@ export default function Routes() {
   return (
     <Switch>
       <Route exact path="/">
-        <Home auth={auth} />
+        <Home auth={auth} setAuth={setAuth} />
       </Route>
-      <Route path="/signup">
+      <Route exact path="/signup">
         <Signup auth={auth} />
+      </Route>
+      <Route exact path="/login">
+        <Login auth={auth} setAuth={setAuth} />
       </Route>
     </Switch>
   );
