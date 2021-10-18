@@ -5,19 +5,23 @@ import {
   DashboardContainer,
   Card,
   FormContainer,
+  TechCards,
 } from "./styles";
 import { useHistory } from "react-router";
 import { useForm } from "react-hook-form";
 import { api } from "../../services";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import axios from "axios";
 
-export default function Home({ auth, setAuth, userId }) {
+export default function Home({ auth, setAuth }) {
   const [techs, setTechs] = useState([]);
-  const [token] = useState(
-    JSON.parse(localStorage.getItem("@KenzieHub:token")) || ""
-  );
+  const [token] = useState(localStorage.getItem("@KenzieHub:token")) || "";
+  const [userId] = useState(localStorage.getItem("@KenzieHub:id")) || "";
+  const config = {
+    headers: {
+      Authorization: "Bearer " + localStorage.getItem("@KenzieHub:token"),
+    },
+  };
   const history = useHistory();
 
   const logOff = (e) => {
@@ -31,13 +35,8 @@ export default function Home({ auth, setAuth, userId }) {
 
   const loadTech = () => {
     api
-      .get("/users/" + userId, {
-        headers: {
-          Authorization: `Bearer {token}`,
-        },
-      })
+      .get(`/users/${userId}`)
       .then((response) => {
-        console.log(response);
         const apiTechs = response.data.techs.map((tech) => ({
           ...tech,
           createdAt: new Date(tech.createdAt).toLocaleDateString("pt-BR", {
@@ -53,10 +52,9 @@ export default function Home({ auth, setAuth, userId }) {
 
   useEffect(() => {
     loadTech();
-  }, []);
+  });
 
   const SubmitTech = (data) => {
-    console.log(data);
     if (!data.tech && !data.status) {
       return toast.error(
         "Preencha os campos para adicionar uma nova tecnologia"
@@ -68,15 +66,15 @@ export default function Home({ auth, setAuth, userId }) {
           Authorization: "Bearer " + token,
         },
       })
-      .then(
-        (response) => console.log(response)
-        // loadTech()
-      )
+      // .then((_) => loadTech())
       .catch((err) => console.log(err));
   };
 
   const removeTech = (id) => {
-    const newTechs = techs.filter((tech) => console.log(tech));
+    const newTechs = techs.filter((tech) => tech.id !== id);
+    setTechs(newTechs);
+
+    api.delete(`/users/techs/${id}`, config);
   };
 
   if (!auth) {
@@ -102,16 +100,18 @@ export default function Home({ auth, setAuth, userId }) {
             <button type="submit">Adicionar</button>
           </form>
         </FormContainer>
-        {techs &&
-          techs.map((tech) => (
-            <Card>
-              <div key={tech.id}>
-                <h3>{tech.title}</h3>
-                <p>{tech.status}</p>
-                <button onClick={() => removeTech(tech.id)}>Remove</button>
-              </div>
-            </Card>
-          ))}
+        <TechCards>
+          {techs &&
+            techs.map((tech) => (
+              <Card key={tech.id}>
+                <div key={tech.id}>
+                  <h3>{tech.title}</h3>
+                  <p>{tech.status}</p>
+                  <button onClick={() => removeTech(tech.id)}>Remove</button>
+                </div>
+              </Card>
+            ))}
+        </TechCards>
       </DashboardContainer>
     </Container>
   );

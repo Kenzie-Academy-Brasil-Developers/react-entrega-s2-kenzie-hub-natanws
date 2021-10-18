@@ -2,7 +2,7 @@ import { Container, ImageContainer } from "./styles";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import Image from "../../assets/drawkit-grape-pack-illustration-1.svg";
+import Image from "../../assets/signup.svg";
 import { Link } from "react-router-dom";
 import { api } from "../../services";
 import { Redirect, useHistory } from "react-router";

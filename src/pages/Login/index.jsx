@@ -2,7 +2,7 @@ import { Container, ImageContainer } from "./styles";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import Image from "../../assets/drawkit-grape-pack-illustration-1.svg";
+import Image from "../../assets/login.svg";
 import { Link } from "react-router-dom";
 import { api } from "../../services";
 import { Redirect, useHistory } from "react-router";
@@ -28,12 +28,8 @@ export default function Login({ auth, setAuth, setUserId }) {
     api
       .post("/sessions", data)
       .then((response) => {
-        console.log(response);
-        localStorage.setItem(
-          "@KenzieHub:token",
-          JSON.stringify(response.data.token)
-        );
-        setUserId(response.data.user.id);
+        localStorage.setItem("@KenzieHub:token", response.data.token);
+        localStorage.setItem("@KenzieHub:id", response.data.user.id);
         setAuth(true);
         return history.push("/");
       })

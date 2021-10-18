@@ -2,7 +2,12 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   width: 100vw;
+  height: 100vh;
   background-color: var(--light-gray);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 `;
 
 export const Bianca = styled.div`
@@ -10,6 +15,7 @@ export const Bianca = styled.div`
   width: 100%;
   padding: 15px 20px;
   position: fixed;
+  margin-bottom: 30px;
   top: 0;
   display: flex;
   justify-content: flex-end;
@@ -66,7 +72,14 @@ export const FormContainer = styled.div`
       }
     }
     button {
-      height: 45px;
+      border: none;
+      border: none;
+      border-radius: 15px;
+      padding: 5px 20px;
+      color: var(--light-gray);
+      background-color: var(--blue);
+      margin-left: 10px;
+      align-self: flex-start;
     }
   }
 `;
@@ -80,6 +93,7 @@ export const Card = styled.div`
   align-items: center;
   justify-content: center;
   height: 250px;
+  margin: 20px;
 
   div {
     display: flex;
@@ -113,4 +127,9 @@ export const Card = styled.div`
       background-color: var(--blue);
     }
   }
+`;
+
+export const TechCards = styled.div`
+  display: flex;
+  flex-wrap: wrap;
 `;
