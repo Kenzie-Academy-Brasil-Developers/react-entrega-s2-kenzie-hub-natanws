@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import { api } from "../../services";
 import { Redirect, useHistory } from "react-router";
 
-export default function Login({ auth, setAuth }) {
+export default function Login({ auth, setAuth, setUserId }) {
   const schema = yup.object().shape({
     email: yup.string().required("Campo obrigatório").email("Email inválido"),
     password: yup
@@ -28,14 +28,12 @@ export default function Login({ auth, setAuth }) {
     api
       .post("/sessions", data)
       .then((response) => {
+        console.log(response);
         localStorage.setItem(
           "@KenzieHub:token",
           JSON.stringify(response.data.token)
         );
-        localStorage.setItem(
-          "@KenzieHub:id",
-          JSON.stringify(response.data.user.id)
-        );
+        setUserId(response.data.user.id);
         setAuth(true);
         return history.push("/");
       })

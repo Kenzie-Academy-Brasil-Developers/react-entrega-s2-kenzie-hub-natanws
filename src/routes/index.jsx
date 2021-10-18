@@ -6,6 +6,7 @@ import Signup from "../pages/Signup";
 
 export default function Routes() {
   const [auth, setAuth] = useState(false);
+  const [userId, setUserId] = useState("");
 
   useEffect(() => {
     const token = JSON.parse(localStorage.getItem("@KenzieHub:token"));
@@ -17,13 +18,13 @@ export default function Routes() {
   return (
     <Switch>
       <Route exact path="/">
-        <Home auth={auth} setAuth={setAuth} />
+        <Home auth={auth} setAuth={setAuth} userId={userId} />
       </Route>
       <Route exact path="/signup">
         <Signup auth={auth} />
       </Route>
       <Route exact path="/login">
-        <Login auth={auth} setAuth={setAuth} />
+        <Login auth={auth} setAuth={setAuth} setUserId={setUserId} />
       </Route>
     </Switch>
   );
