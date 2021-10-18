@@ -15,7 +15,9 @@ import axios from "axios";
 
 export default function Home({ auth, setAuth, userId }) {
   const [techs, setTechs] = useState([]);
-  const [token] = useState(localStorage.getItem("@KenzieHub:token") || "");
+  const [token] = useState(
+    JSON.parse(localStorage.getItem("@KenzieHub:token")) || ""
+  );
   const history = useHistory();
 
   const logOff = (e) => {
@@ -100,16 +102,16 @@ export default function Home({ auth, setAuth, userId }) {
             <button type="submit">Adicionar</button>
           </form>
         </FormContainer>
-        <Card>
-          {techs &&
-            techs.map((tech) => (
+        {techs &&
+          techs.map((tech) => (
+            <Card>
               <div key={tech.id}>
                 <h3>{tech.title}</h3>
                 <p>{tech.status}</p>
                 <button onClick={() => removeTech(tech.id)}>Remove</button>
               </div>
-            ))}
-        </Card>
+            </Card>
+          ))}
       </DashboardContainer>
     </Container>
   );
