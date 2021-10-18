@@ -106,6 +106,11 @@ export const Card = styled.div`
     h3 {
       color: var(--blue);
       font-size: 1.4rem;
+      width: 150px;
+      text-align: center;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
     }
 
     p {
